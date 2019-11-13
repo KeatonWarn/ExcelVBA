@@ -1,0 +1,42 @@
+'Warn.K 11.13.2019
+
+Sub Macro1()
+
+    Dim i As Integer
+    Dim ws_num As Integer
+    
+    Dim starting_ws As Worksheet
+    Set starting_ws = ActiveSheet 'remember which worksheet is active in the beginning
+    ws_num = ThisWorkbook.Worksheets.Count
+    
+    For i = 1 To ws_num
+        ThisWorkbook.Worksheets(i).Activate
+        
+        'do whatever you need
+        ActiveSheet.UsedRange.Select
+        Selection.Copy
+        Sheets("4000000").Select 'GET NAME OF FIRST SHEET, ASSIGN TO VAR, PUT IN PLACE OF "4000000"
+        
+        Dim LastRow As Long
+        'Step 2: Capture the last used row number.
+        LastRow = Cells(Rows.Count, 1).End(xlUp).Row
+        'Step 3: Select the next row down
+        Cells(LastRow, 1).Offset(1, 0).Select
+        'End Sub
+        ActiveSheet.Paste
+        
+        '''''
+        ThisWorkbook.Worksheets(i).Cells(1, 1) = 1  'this sets cell A1 of each sheet to "1"
+    Next
+    
+    starting_ws.Activate 'activate the worksheet that was originally active
+
+
+    'Example recorded copy/paste code
+    'Sheets("Sheet1").Select
+    'Range("A1:T125").Select
+    'Selection.Copy
+    'Sheets("Sheet1").Select
+    'Range("A127").Select
+    'ActiveSheet.Paste
+End Sub
